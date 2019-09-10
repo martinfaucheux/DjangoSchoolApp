@@ -1,13 +1,36 @@
 from main.models import School, Student
 from main.serializers import SchoolSerializer, StudentSerializer
-from rest_framework import generics
+
+from rest_framework import viewsets, generics
 from rest_framework.exceptions import ValidationError
 
 from django.shortcuts import render
 
-# Create your views here.
-def home(request):
-    return render(request, 'main/index.html')
+
+
+class SchoolViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = School.objects.all() # order by... ?
+    serializer_class = SchoolSerializer
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+
+
+
+
+
+
+
 
 
 class SchoolList(generics.ListCreateAPIView):
