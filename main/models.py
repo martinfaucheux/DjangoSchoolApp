@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-import uuid
 
 # validator to check if max numb of school is reached
 def validate_school_not_full(school):
@@ -27,12 +26,6 @@ class School(models.Model):
 class Student(models.Model):
   name = models.CharField(max_length=20)
   last_name = models.CharField(max_length=20)
-  str_id = models.CharField(max_length=100, blank=True, unique=True)
-
-  def __init__(self):
-    super(Student, self).__init__()
-    self.uuid = chr(self.id)
-
 
 
 
