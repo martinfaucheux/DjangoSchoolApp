@@ -28,18 +28,16 @@ class StudentViewSet(viewsets.ModelViewSet):
       return Student.objects.filter(school=self.kwargs['school_pk'])
     return Student.objects.all()
 
-  # to be fixed
 
   def create(self, request, school_pk=None):
-    print(type(request.data))
-    if school_pk:
-      # print('got school_pk')
-      request.data["school"] = school_pk
-    print(request.data)
 
+    # if creation from route /schools/X/students/
+    if school_pk:
+      request.data["school"] = school_pk
+
+    # normal behavior
     return super(viewsets.ModelViewSet, self).create(request)
 
-    #return Response(status=status.HTTP_202_ACCEPTED)
 
 
 # see:
