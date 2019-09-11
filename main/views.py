@@ -2,7 +2,7 @@ from main.models import School, Student
 from main.serializers import SchoolSerializer, StudentSerializer
 from rest_framework import viewsets, generics, status
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
+from django.template import RequestContext 
 
 from django.shortcuts import render
 
@@ -23,23 +23,28 @@ class StudentViewSet(viewsets.ModelViewSet):
   queryset = Student.objects.all()
   serializer_class = StudentSerializer
 
-  def get_queryset(self):
-    if 'school_pk' in self.kwargs:
-      return Student.objects.filter(school=self.kwargs['school_pk'])
-    return Student.objects.all()
 
-  # to be fixed
+  def get_queryset(self):
+    
+    paramname = self.request.GET.get('name',None)
+
+    q = Student.objects.all()
+    if 'school_pk' in self.kwargs:
+      q = q.filter(school=self.kwargs['school_pk'])
+    if paramname:
+      q = q.filter(name=paramname)
+    return q
+
 
   def create(self, request, school_pk=None):
-    print(type(request.data))
-    if school_pk:
-      # print('got school_pk')
-      request.data["school"] = school_pk
-    print(request.data)
 
+    # if creation from route /schools/X/students/
+    if school_pk:
+      request.data["school"] = school_pk
+
+    # normal behavior
     return super(viewsets.ModelViewSet, self).create(request)
 
-    #return Response(status=status.HTTP_202_ACCEPTED)
 
 
 # see:
