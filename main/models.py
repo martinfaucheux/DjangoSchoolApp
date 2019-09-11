@@ -22,12 +22,10 @@ class School(models.Model):
 
 
 
-
 # Students have a first name, a last name, and a student identification string (20 characters max for each)
 class Student(models.Model):
   name = models.CharField(max_length=20)
   last_name = models.CharField(max_length=20)
-  str_id = models.CharField(max_length=20, unique=True, editable=False, default="")
 
 
   # Each student object must belong to a school object
@@ -35,24 +33,6 @@ class Student(models.Model):
                     School,
                     on_delete=models.CASCADE,
                     validators=[validate_school_not_full])
-
-  def generate_str():
-    students = Student.objects.all()
-    if not students:
-      max_id = 0
-    else:
-      max_id = students.order_by("-id")[0].id
-
-    return chr(max_id + 1)
-
-
-  def save(self, *args, **kwargs):
-    if len(self.str_id) == 0:
-      self.str_id = Student.generate_str()
-    super().save(*args, **kwargs)
-
-    
-
 
 
   def __str__(self):
