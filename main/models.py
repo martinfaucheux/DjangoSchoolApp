@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+import datetime
 
 # validator to check if max numb of school is reached
 def validate_school_not_full(school):
@@ -28,6 +29,8 @@ class Student(models.Model):
   name = models.CharField(max_length=20)
   last_name = models.CharField(max_length=20)
   str_id = models.CharField(max_length=20, unique=True, editable=False, default="")
+  creation_date = models.DateField(default=datetime.date.today, editable=False)
+  birthday = models.DateField(default=datetime.date.today)
 
 
   # Each student object must belong to a school object

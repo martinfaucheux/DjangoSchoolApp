@@ -27,12 +27,19 @@ class StudentViewSet(viewsets.ModelViewSet):
   def get_queryset(self):
     
     paramname = self.request.GET.get('name',None)
+    paramorder = self.request.GET.get('order',None)
 
     q = Student.objects.all()
     if 'school_pk' in self.kwargs:
       q = q.filter(school=self.kwargs['school_pk'])
     if paramname:
       q = q.filter(name=paramname)
+
+    if paramorder == 'birthday':
+      q = q.order_by('-birthday')
+    else:
+      q = q.order_by('-creation_date')
+
     return q
 
 
