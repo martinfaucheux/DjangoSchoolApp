@@ -1,5 +1,5 @@
-from main.models import School, Student
-from main.serializers import SchoolSerializer, StudentSerializer
+from .models import School, Student
+from .serializers import SchoolSerializer, StudentSerializer
 from rest_framework import viewsets, generics, status
 from rest_framework.exceptions import ValidationError
 from django.template import RequestContext 
