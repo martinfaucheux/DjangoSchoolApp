@@ -23,6 +23,7 @@ __Students__ have a name (_name_), a last name (_last_name_), a birthday (_birth
   "school": 1
 }
 ```
+
 ## What you can do
 The API allows a set of actions depending on the route:
 * /schools/ allows to list the schools (_GET_) or create a new school (_POST_)
